@@ -1,185 +1,153 @@
 # MCP-OSS
+
 ## Model Context Plane – Open System Stack
 
-MCP-OSS is an architectural control plane for LLM-based systems.
-It explicitly separates Intent, Decision, Enforcement, and Capabilities,
-enabling secure, deterministic, and auditable execution of actions.
+MCP-OSS defines an explicit **Model Context Plane** for LLM-based systems.
 
-This repository contains the reference implementation (L-MCP) and is
-normatively derived from RFC-0000.
+It introduces a strict architectural separation between:
+
+- **Intent**
+- **Decision**
+- **Enforcement**
+- **Capabilities**
+
+This separation enables **deterministic execution**, **policy-based control**, and **full auditability** of model-driven actions.
+
+MCP-OSS is **not** an agent framework and **not** a tool orchestration layer.  
+It is a **control plane** that governs how actions are requested, approved, and executed.
 
 ---
 
-## Motivation
+## What Problem MCP-OSS Solves
 
-Large Language Models lack an inherent control plane.
-Tool-calling, agent frameworks, and workflows mix decision-making,
-execution, and security assumptions.
+Large Language Models currently mix:
 
-MCP-OSS introduces an explicit Model Context Plane between model, user,
-and execution environment.
+- reasoning  
+- decision-making  
+- execution  
+- security assumptions  
+
+inside a single, opaque runtime.
+
+This leads to:
+
+- non-deterministic behavior  
+- weak or implicit security boundaries  
+- missing audit trails  
+- unclear responsibility between model and system  
+
+MCP-OSS separates these concerns **by design**.
 
 ---
 
 ## Architecture Overview
 
-MCP-OSS strictly separates two layers:
+MCP-OSS enforces a fixed and explicit execution flow:
 
-### Control Plane
-- Intent
-- Decision
-- Enforcement
-- Audit
+Intent → Decision → Enforcement → Capability
 
-### Data Plane
-- Execution
-- IO
-- Side effects
 
-Rule:
-The control plane MUST NOT produce side effects.
+Key architectural properties:
+
+- Intent is a first-class, addressable entity.
+- Decisions are policy-based and externally auditable.
+- Enforcement is explicit and deterministic.
+- Capabilities are isolated, replaceable, and non-authoritative.
+
+The architecture is invariant across **local**, **hybrid**, and **distributed** deployments.
 
 ---
 
-## Core Concepts
+## Reference Implementation (L-MCP)
 
-### Intent
-Explicit, structured description of an intended action.
-Intent is the root entity of all flows.
+This repository contains a **frozen Local MCP (L-MCP) reference implementation**.
 
-### Lifecycle
-
-CREATED → APPROVED → EXECUTION_PENDING → EXECUTED | FAILED
+Location:
 
 
-All transitions are deterministic, auditable, and irreversible.
+Key architectural properties:
 
----
+- Intent is a first-class, addressable entity.
+- Decisions are policy-based and externally auditable.
+- Enforcement is explicit and deterministic.
+- Capabilities are isolated, replaceable, and non-authoritative.
 
-### Decision
-Evaluates an intent against policies, context, system state,
-and capability metadata.
+The architecture is invariant across **local**, **hybrid**, and **distributed** deployments.
 
 ---
 
-### Enforcement
-Technically enforces the decision result.
-No capability access without enforcement.
+## Reference Implementation (L-MCP)
+
+This repository contains a **frozen Local MCP (L-MCP) reference implementation**.
+
+Location:
+
+reference/l-mcp/AISys_Gemini
+
+
+Status:
+
+- ✅ Frozen proof-of-concept  
+- ✅ Normative reference for MCP-OSS  
+- ❌ Not production-hardened  
+
+The implementation strictly follows:
+
+- RFC-0000  
+- The MCP-OSS architecture model  
+
+It exists to **demonstrate architectural correctness**, not performance or scalability.
+
+See:
+
+reference/l-mcp/AISys_Gemini/FROZEN.md
+
 
 ---
 
-### Capability
-Explicitly declared, isolated ability with a manifest,
-statically bound permissions, and defined isolation.
+## What MCP-OSS Is Not
+
+MCP-OSS is deliberately **not**:
+
+- a chatbot framework  
+- an agent runtime  
+- a workflow engine  
+- a prompt-management tool  
+
+MCP-OSS operates **below** these layers as a control plane.
 
 ---
 
-## Components
+## Governance and Status
 
-- MCP Client
-- MCP-OSS Core
-  - MCP-OSS Host
-  - MCP Server (Standard)
-- Optional: MCP-OSS Agent
+- Specification-driven (RFC-based)
+- Architecture-first
+- Security and auditability as primary constraints
 
----
+Current maturity:
 
-## Reference Implementation: L-MCP
-
-This repository includes a fully functional reference implementation:
-
-- deterministic intent state machine
-- real enforcement
-- capability isolation
-- audit logging
-- monitoring dashboard (read-only)
-
-The implementation is non-normative and validates the RFC.
+- Architecture: stable  
+- RFC: published (Draft-00)  
+- Reference implementation: frozen  
+- Production usage: explicitly out of scope  
 
 ---
 
-## RFC-First Principle
+## Repository Structure
 
-- RFC-0000 is normative
-- Code follows the RFC
-- No feature without RFC reference
-- Architecture changes are RFC-first
+RFC/ # Normative specification (RFC-0000)
+reference/l-mcp/ # Frozen L-MCP reference implementation
+ARCHITECTURE.md # Visual and structural architecture overview
+TERMINOLOGY.md # Consistent terminology glossary
+GOVERNANCE.md # Project governance model
+SECURITY.md # Security model and assumptions
+CONTRIBUTING.md # Contribution rules and architectural constraints
+RELEASES.md # Release and versioning notes
+
 
 ---
 
 ## License
 
-### Specification (RFC)
-Creative Commons Attribution 4.0 International (CC BY 4.0)
+Apache License 2.0
 
-### Code
-See `LICENSE`.
-
----
-
-## Status
-
-- RFC-0000: Draft-00
-- L-MCP: end-to-end validated reference implementation
-- Dashboard: reference UI (monitoring/audit)
-
----
-
-## Scope
-
-MCP-OSS is not:
-- an agent framework
-- a tool-calling wrapper
-- a workflow system
-
-MCP-OSS is a control plane.
-
----
-
-## Reference Implementation: L-MCP
-
-This repository includes a **reference implementation** of the MCP-OSS
-architecture, referred to as **L-MCP (Local Model Context Plane)**.
-
-### Purpose
-
-L-MCP exists to:
-- validate the architecture defined in RFC-0000
-- demonstrate deterministic intent handling, decision, and enforcement
-- provide a concrete, auditable execution model
-
-L-MCP is **non-normative**.  
-The RFC remains the sole architectural authority.
-
-### Scope
-
-The reference implementation focuses on:
-- local execution
-- explicit intent lifecycle management
-- policy-based decision and enforcement
-- capability isolation
-- auditability and observability
-
-It is **not** a product, framework, or SDK.
-
-### Repository Structure
-
-core/ – control plane logic (intent, decision, enforcement, audit)
-host/ – local runtime and orchestration
-server/ – capability execution interfaces
-dashboard/ – reference monitoring and audit UI
-
-
-### Conformance
-
-L-MCP is intended to be **RFC-0000 compliant**.
-
-Any deviation from the RFC must be explicitly documented.
-Architecture changes require a new RFC.
-
----
-
-## Contact
-
-Yassir Alif  
-yassir-alif@t-online.de
