@@ -136,6 +136,49 @@ MCP-OSS is a control plane.
 
 ---
 
+## Reference Implementation: L-MCP
+
+This repository includes a **reference implementation** of the MCP-OSS
+architecture, referred to as **L-MCP (Local Model Context Plane)**.
+
+### Purpose
+
+L-MCP exists to:
+- validate the architecture defined in RFC-0000
+- demonstrate deterministic intent handling, decision, and enforcement
+- provide a concrete, auditable execution model
+
+L-MCP is **non-normative**.  
+The RFC remains the sole architectural authority.
+
+### Scope
+
+The reference implementation focuses on:
+- local execution
+- explicit intent lifecycle management
+- policy-based decision and enforcement
+- capability isolation
+- auditability and observability
+
+It is **not** a product, framework, or SDK.
+
+### Repository Structure
+
+core/ – control plane logic (intent, decision, enforcement, audit)
+host/ – local runtime and orchestration
+server/ – capability execution interfaces
+dashboard/ – reference monitoring and audit UI
+
+
+### Conformance
+
+L-MCP is intended to be **RFC-0000 compliant**.
+
+Any deviation from the RFC must be explicitly documented.
+Architecture changes require a new RFC.
+
+---
+
 ## Contact
 
 Yassir Alif  
