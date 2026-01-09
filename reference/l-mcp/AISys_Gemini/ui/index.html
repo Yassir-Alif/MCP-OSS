@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AISys - Operator Dashboard</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="brand">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+            AISys
+        </div>
+        
+        <nav>
+            <a href="#" class="nav-link active" data-view="dashboard">
+                Dashboard
+            </a>
+            <a href="#" class="nav-link" data-view="intents">
+                Intent Explorer
+            </a>
+            <a href="#" class="nav-link" data-view="capabilities">
+                Capabilities
+            </a>
+        </nav>
+        
+        <div style="margin-top:auto; font-size:0.8rem; color: #6c757d;">
+            <div>L-MCP Reference</div>
+            <div style="margin-top:5px;">v1.0 (Mock Mode)</div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div id="view-container">
+            <!-- Dynamic Content Loaded Here -->
+            <div style="display:flex; justify-content:center; align-items:center; height:100%;">
+                Loading Control Plane...
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

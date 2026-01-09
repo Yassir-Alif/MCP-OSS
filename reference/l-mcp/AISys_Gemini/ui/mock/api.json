@@ -1,0 +1,208 @@
+{
+    "health": {
+        "core": "healthy",
+        "agent": "online",
+        "uptime": "2d 4h 12m"
+    },
+    "stats": {
+        "active_intents": 12,
+        "state_distribution": {
+            "CREATED": 2,
+            "DECISION_PENDING": 1,
+            "APPROVED": 1,
+            "DENIED": 3,
+            "EXECUTION_PENDING": 1,
+            "EXECUTED": 45,
+            "FAILED": 2
+        }
+    },
+    "capabilities": [
+        {
+            "name": "fs.list",
+            "type": "local",
+            "description": "List files in a directory",
+            "bindings": [
+                "role:operator",
+                "path:/var/logs"
+            ]
+        },
+        {
+            "name": "fs.read",
+            "type": "local",
+            "description": "Read file content",
+            "bindings": [
+                "role:operator",
+                "path:/var/logs/*.log"
+            ]
+        },
+        {
+            "name": "net.query",
+            "type": "external",
+            "description": "Query external knowledge base",
+            "bindings": [
+                "role:admin"
+            ]
+        }
+    ],
+    "intents": [
+        {
+            "id": "int-1001",
+            "source": "Operator_Smith",
+            "content": "List files in /var/logs",
+            "current_state": "CREATED",
+            "timestamp": "2026-01-08T23:10:00",
+            "history": []
+        },
+        {
+            "id": "int-1002",
+            "source": "LLM_Proxy",
+            "content": "Read /etc/passwd",
+            "current_state": "DECISION_PENDING",
+            "timestamp": "2026-01-08T23:12:00",
+            "history": [
+                {
+                    "from": "CREATED",
+                    "to": "DECISION_PENDING",
+                    "timestamp": "2026-01-08T23:12:01",
+                    "trigger": "Core"
+                }
+            ]
+        },
+        {
+            "id": "int-1003",
+            "source": "Operator_Doe",
+            "content": "Restart Service Nginx",
+            "current_state": "APPROVED",
+            "timestamp": "2026-01-08T23:05:00",
+            "decision_metadata": {
+                "approved": true,
+                "reason": "Standard Maintenance Window"
+            },
+            "history": [
+                {
+                    "from": "CREATED",
+                    "to": "DECISION_PENDING",
+                    "timestamp": "2026-01-08T23:05:01"
+                },
+                {
+                    "from": "DECISION_PENDING",
+                    "to": "APPROVED",
+                    "timestamp": "2026-01-08T23:05:05"
+                }
+            ]
+        },
+        {
+            "id": "int-1004",
+            "source": "Auto_Scaler",
+            "content": "Delete /root",
+            "current_state": "DENIED",
+            "timestamp": "2026-01-08T22:50:00",
+            "decision_metadata": {
+                "approved": false,
+                "reason": "Capability system.delete not allowed"
+            },
+            "history": [
+                {
+                    "from": "CREATED",
+                    "to": "DECISION_PENDING",
+                    "timestamp": "2026-01-08T22:50:01"
+                },
+                {
+                    "from": "DECISION_PENDING",
+                    "to": "DENIED",
+                    "timestamp": "2026-01-08T22:50:02"
+                }
+            ]
+        },
+        {
+            "id": "int-1005",
+            "source": "Operator_Test",
+            "content": "Update Cache",
+            "current_state": "EXECUTION_PENDING",
+            "timestamp": "2026-01-08T23:14:00",
+            "history": [
+                {
+                    "from": "CREATED",
+                    "to": "DECISION_PENDING",
+                    "timestamp": "2026-01-08T23:14:01"
+                },
+                {
+                    "from": "DECISION_PENDING",
+                    "to": "APPROVED",
+                    "timestamp": "2026-01-08T23:14:02"
+                },
+                {
+                    "from": "APPROVED",
+                    "to": "EXECUTION_PENDING",
+                    "timestamp": "2026-01-08T23:14:03",
+                    "component": "Core"
+                }
+            ]
+        },
+        {
+            "id": "int-1006",
+            "source": "Cron_Job",
+            "content": "Sync Logs",
+            "current_state": "EXECUTED",
+            "timestamp": "2026-01-08T22:00:00",
+            "execution_result": {
+                "status": "ok",
+                "bytes": 1024
+            },
+            "history": [
+                {
+                    "from": "CREATED",
+                    "to": "DECISION_PENDING",
+                    "timestamp": "2026-01-08T22:00:00"
+                },
+                {
+                    "from": "DECISION_PENDING",
+                    "to": "APPROVED",
+                    "timestamp": "2026-01-08T22:00:01"
+                },
+                {
+                    "from": "APPROVED",
+                    "to": "EXECUTION_PENDING",
+                    "timestamp": "2026-01-08T22:00:02"
+                },
+                {
+                    "from": "EXECUTION_PENDING",
+                    "to": "EXECUTED",
+                    "timestamp": "2026-01-08T22:00:05"
+                }
+            ]
+        },
+        {
+            "id": "int-1007",
+            "source": "User_Dev",
+            "content": "Deploy Hotfix",
+            "current_state": "FAILED",
+            "timestamp": "2026-01-08T21:30:00",
+            "execution_result": {
+                "error": "Timeout waiting for lock"
+            },
+            "history": [
+                {
+                    "from": "CREATED",
+                    "to": "DECISION_PENDING",
+                    "timestamp": "2026-01-08T21:30:00"
+                },
+                {
+                    "from": "DECISION_PENDING",
+                    "to": "APPROVED",
+                    "timestamp": "2026-01-08T21:30:01"
+                },
+                {
+                    "from": "APPROVED",
+                    "to": "EXECUTION_PENDING",
+                    "timestamp": "2026-01-08T21:30:02"
+                },
+                {
+                    "from": "EXECUTION_PENDING",
+                    "to": "FAILED",
+                    "timestamp": "2026-01-08T21:30:30"
+                }
+            ]
+        }
+    ]
+}
